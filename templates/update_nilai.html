@@ -4,7 +4,6 @@
 <div class="container">
     <h1 class="my-4">Update Nilai</h1>
 
-    <!-- Error Handling -->
     {% if error %}
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         {{ error }}
@@ -14,7 +13,6 @@
     </div>
     {% endif %}
 
-    <!-- Form to Update Nilai -->
     <form action="{{ url_for('update_nilai', id=nilai.id) }}" method="post">
         <div class="form-group">
             <label for="mata_kuliah">Mata Kuliah</label>
