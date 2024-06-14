@@ -29,12 +29,10 @@ class Nilai(db.Model):
     def nilai_akhir(self):
         return 0.2 * self.uts + 0.2 * self.uas + 0.6 * self.kat
 
-# Create all tables within the application context
 with app.app_context():
     db.create_all()
 
 # Routes
-
 @app.route('/')
 def index():
     mahasiswa = Mahasiswa.query.all()
@@ -91,8 +89,6 @@ def delete_mahasiswa(id):
     db.session.commit()
     
     return redirect(url_for('index'))
-
-# Routes and logic for nilai (academic grades)
 
 @app.route('/mahasiswa/<int:mahasiswa_id>/nilai/create', methods=['GET', 'POST'])
 def create_nilai(mahasiswa_id):
