@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1 class="my-4">Tambah Mahasiswa</h1>
+    
+    <form action="{{ url_for('create_mahasiswa') }}" method="post">
+        <div class="mb-3">
+            <label for="nama" class="form-label">Nama</label>
+            <input type="text" class="form-control" id="nama" name="nama" required>
+        </div>
+        <div class="mb-3">
+            <label for="nim" class="form-label">NIM</label>
+            <input type="text" class="form-control" id="nim" name="nim" required>
+        </div>
+        <button type="submit" class="btn btn-success">Tambah Mahasiswa</button>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Kembali</a>
+    </form>
+</div>
+{% endblock %}
