@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1 class="my-4">Update Mahasiswa</h1>
+    
+    <form action="{{ url_for('update_mahasiswa', id=mahasiswa.id) }}" method="post">
+        <div class="mb-3">
+            <label for="nama" class="form-label">Nama</label>
+            <input type="text" class="form-control" id="nama" name="nama" value="{{ mahasiswa.nama }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="nim" class="form-label">NIM</label>
+            <input type="text" class="form-control" id="nim" name="nim" value="{{ mahasiswa.nim }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Kembali</a>
+    </form>
+</div>
+{% endblock %}

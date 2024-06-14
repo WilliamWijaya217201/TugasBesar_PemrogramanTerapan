@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1 class="my-4">Manajemen Mahasiswa</h1>
+    
+    <a href="{{ url_for('create_mahasiswa') }}" class="btn btn-success mb-3">Tambah Mahasiswa</a>
+
+    {% if mahasiswa %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nama</th>
+                <th>NIM</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for m in mahasiswa %}
+            <tr>
+                <td>{{ m.id }}</td>
+                <td>{{ m.nama }}</td>
+                <td>{{ m.nim }}</td>
+                <td>
+                    <a href="{{ url_for('update_mahasiswa', id=m.id) }}" class="btn btn-primary btn-sm">Update Mahasiswa</a>
+                    <form action="{{ url_for('delete_mahasiswa', id=m.id) }}" method="post" style="display:inline;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete Mahasiswa</button>
+                    </form>
+                    <div class="modal fade" id="deleteNilaiModal{{ m.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteNilaiModalLabel{{ m.id }}" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteNilaiModalLabel{{ m.id }}">Hapus Nilai</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Apakah Anda yakin ingin menghapus nilai untuk mahasiswa {{ m.nama }}?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                    <form action="{{ url_for('delete_nilai', id=m.id) }}" method="post" style="display:inline;">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <button type="submit" class="btn btn-danger">Hapus</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+                <tr>
+                    <td colspan="4">
+                        <div id="collapse{{ m.id }}" class="collapse show">
+                        <h5>Nilai {{ m.nama }}</h5>
+                        <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Mata Kuliah</th>
+                                <th>UTS</th>
+                                <th>UAS</th>
+                                <th>KAT</th>
+                                <th>Nilai Akhir</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                    <tbody>
+                    {% for nilai in m.nilai %}
+                    <tr>
+                        <td>{{ nilai.mata_kuliah }}</td>
+                        <td>{{ nilai.uts }}</td>
+                        <td>{{ nilai.uas }}</td>
+                        <td>{{ nilai.kat }}</td>
+                        <td>{{ nilai.nilai_akhir }}</td>
+                        <td>
+                            <form action="{{ url_for('delete_nilai', id=nilai.id) }}" method="post" style="display:inline;">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <a href="{{ url_for('update_nilai', id=nilai.id) }}" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#updateNilaiModal{{ nilai.id }}">Update Nilai</a>
+                                <button type="submit" class="btn btn-danger btn-sm">Delete Nilai</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                        </table>
+                            <a href="{{ url_for('create_nilai', mahasiswa_id=m.id) }}" class="btn btn-primary">Tambah Nilai</a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>Tidak ada data mahasiswa.</p>
+    {% endif %}
+</div>
+{% endblock %}
